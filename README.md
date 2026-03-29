@@ -11,11 +11,11 @@
 <p align="center">
   <a href="https://pypi.org/project/boreholeai/"><img src="https://img.shields.io/pypi/v/boreholeai?label=pypi&color=blue" alt="PyPI"></a>
   <a href="https://pypi.org/project/boreholeai/"><img src="https://img.shields.io/pypi/pyversions/boreholeai" alt="Python"></a>
-  <a href="https://github.com/Quin-L/boreholeai-python/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="License"></a>
+  <a href="https://github.com/Quin-L/boreholeai-python/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-Apache--2.0-green" alt="License"></a>
 </p>
 
 <p align="center">
-  <a href="https://boreholeai.com">boreholeai.com</a> · <a href="https://boreholeai.com/app/settings/api-keys">Get API Key</a> · <a href="mailto:support@boreholeai.com">Contact</a>
+  <a href="https://boreholeai.com">Website</a> · <a href="https://boreholeai.com/app/settings/api-keys">Get API Key</a> · <a href="mailto:support@boreholeai.com">Contact</a>
 </p>
 
 ---
@@ -142,7 +142,7 @@ class FileResult:
 
 ## Accuracy
 
-BoreholeAI uses a sophisticated multi-agent, multi-stage agentic system that combines engineering deterministic algorithms with AI-assisted document understanding. Your documents are never read directly by AI models — we apply an OCR intermediary layer so that AI only works with extracted text and layout information, never with your original files. The structured output is driven by spatial reasoning and rule-based logic, not generative models.
+BoreholeAI uses a sophisticated multi-agent, multi-stage agentic system that combines engineering deterministic algorithms, customized deep learning models, and computer vision with AI-assisted document understanding. Your documents are never read directly by AI models — we apply an OCR intermediary layer so that AI only works with extracted text and layout information, never with your original files. The structured output is driven by spatial reasoning and rule-based logic, not generative models.
 
 The system handles complex layouts, varying scales, multi-page logs, and inconsistent formatting.
 
@@ -179,4 +179,4 @@ If this is a requirement for your team, [contact us](mailto:support@boreholeai.c
 
 ## License
 
-MIT
+Apache-2.0
