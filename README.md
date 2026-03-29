@@ -22,16 +22,6 @@
 
 Upload borehole log PDFs or images, get structured ground profiles, test data, and annotated PDFs.
 
-## Background
-
-Geotechnical engineers routinely extract data from borehole log PDFs by hand — reading material descriptions, depths, test results, and keying them into spreadsheets or AGS files. On a typical project with dozens of logs, this takes days. On larger projects, it can take weeks.
-
-This matters beyond individual project efficiency. Globally, millions of dollars are spent each year on new ground investigations to understand subsurface conditions — but much of this work has already been done before. Valuable geological and geotechnical records from past projects sit in libraries as old hard copies, in consultancy archives, or on digital platforms that aren't searchable or interoperable. Over time, these reports get misplaced, disposed of, or locked behind organisational boundaries. When that happens, the cycle of discovery starts again from scratch.
-
-Countries like Denmark, the Netherlands, Switzerland, and the UK have recognised this problem and built centralised, publicly accessible geotechnical databases — some legislated as far back as 1926. In Australia, there is no equivalent national system. Geotechnical data is kept in isolation by individual consultancies, with no regulated or standardised approach to data collection and sharing after project completion. For more on this challenge and what other countries have achieved, see the [Churchill Trust report on geotechnical data capture](https://www.churchilltrust.com.au/project/to-develop-a-statewide-sustainable-gis-geotechnical-database-to-capture-present-data-for-the-future/).
-
-We built BoreholeAI because we believe the first step toward better geotechnical data infrastructure is making it easier to get data out of the documents where it's currently trapped. BoreholeAI reads borehole log PDFs (scanned or digital) and extracts the geotechnical data — with depth and spatial awareness — into structured formats like Excel and AGS.
-
 ## What It Does
 
 **Extracts:**
@@ -44,29 +34,6 @@ We built BoreholeAI because we believe the first step toward better geotechnical
 - `Borehole_test_data.xlsx` — all test results in tabular format
 - `Borehole_ags4.ags` — industry-standard AGS4 data transfer file
 - `*_annotated.pdf` — original document with extracted regions highlighted
-
-## Current Scope and Limitations
-
-- **Standard alignment:** Built and validated against **Australian Standard AS 1726** borehole log formats. Logs following other national standards may work but are not yet validated.
-- **Document types:** Borehole logs (BH), pavement core logs (PCP), and test pit logs (TP). Other geotechnical documents (e.g. CPT plots, lab reports) are not currently supported.
-- **Languages:** English only. Other languages may partially work but are not officially supported.
-- **Units:** Metric only — depths and dimensions must be in metres. Logs in feet or other imperial units are not currently supported.
-- **Scan quality:** Logs should be scanned orthogonally. Tilted scans work within approximately 10°, but accuracy drops beyond that.
-- **Watermarks:** PDFs with heavy watermarks, especially tilted ones, will reduce accuracy — particularly for strength and test data extraction. Upload a clean copy where possible.
-- **Handwriting:** Clear handwriting is supported. Extremely unclear handwriting may affect results.
-- **File size:** Maximum 20 MB per file.
-
-## Accuracy
-
-BoreholeAI uses a sophisticated multi-agent, multi-stage agentic system that combines engineering deterministic algorithms with AI-assisted document understanding. Your documents are never read directly by AI models — we apply an OCR intermediary layer so that AI only works with extracted text and layout information, never with your original files. The structured output is driven by spatial reasoning and rule-based logic, not generative models.
-
-The system handles complex layouts, varying scales, multi-page logs, and inconsistent formatting.
-
-We have tested extensively across a wide range of borehole log formats and consistently achieve 95-100% accuracy. We are grateful to the [Queensland Geotechnical Database (QGD)](https://www.qgd.com) for making their data openly available — their collection of real-world borehole logs has been invaluable for testing and validating the system.
-
-That said, borehole logs vary significantly in layout and formatting. If you find an inaccuracy or an extraction issue, please [let us know](mailto:support@boreholeai.com) — every report helps us improve the system.
-
-**Expected input:** Properly formatted borehole log PDFs or clean scanned copies. Photos taken on site (e.g. phone camera shots of printed logs) are not supported and may produce unreliable results.
 
 ## Examples
 
@@ -162,6 +129,39 @@ class FileResult:
     filename: str            # e.g. "Borehole_ground_profile.xlsx"
     path: Path               # Local path where file was saved
 ```
+
+## Background
+
+Geotechnical engineers routinely extract data from borehole log PDFs by hand — reading material descriptions, depths, test results, and keying them into spreadsheets or AGS files. On a typical project with dozens of logs, this takes days. On larger projects, it can take weeks.
+
+This matters beyond individual project efficiency. Globally, millions of dollars are spent each year on new ground investigations to understand subsurface conditions — but much of this work has already been done before. Valuable geological and geotechnical records from past projects sit in libraries as old hard copies, in consultancy archives, or on digital platforms that aren't searchable or interoperable. Over time, these reports get misplaced, disposed of, or locked behind organisational boundaries. When that happens, the cycle of discovery starts again from scratch.
+
+Countries like Denmark, the Netherlands, Switzerland, and the UK have recognised this problem and built centralised, publicly accessible geotechnical databases — some legislated as far back as 1926. In Australia, there is no equivalent national system. Geotechnical data is kept in isolation by individual consultancies, with no regulated or standardised approach to data collection and sharing after project completion. For more on this challenge and what other countries have achieved, see the [Churchill Trust report on geotechnical data capture](https://www.churchilltrust.com.au/project/to-develop-a-statewide-sustainable-gis-geotechnical-database-to-capture-present-data-for-the-future/).
+
+We built BoreholeAI because we believe the first step toward better geotechnical data infrastructure is making it easier to get data out of the documents where it's currently trapped. BoreholeAI reads borehole log PDFs (scanned or digital) and extracts the geotechnical data — with depth and spatial awareness — into structured formats like Excel and AGS.
+
+## Accuracy
+
+BoreholeAI uses a sophisticated multi-agent, multi-stage agentic system that combines engineering deterministic algorithms with AI-assisted document understanding. Your documents are never read directly by AI models — we apply an OCR intermediary layer so that AI only works with extracted text and layout information, never with your original files. The structured output is driven by spatial reasoning and rule-based logic, not generative models.
+
+The system handles complex layouts, varying scales, multi-page logs, and inconsistent formatting.
+
+We have tested extensively across a wide range of borehole log formats and consistently achieve 95-100% accuracy. We are grateful to the [Queensland Geotechnical Database (QGD)](https://www.qgd.com) for making their data openly available — their collection of real-world borehole logs has been invaluable for testing and validating the system.
+
+That said, borehole logs vary significantly in layout and formatting. If you find an inaccuracy or an extraction issue, please [let us know](mailto:support@boreholeai.com) — every report helps us improve the system.
+
+**Expected input:** Properly formatted borehole log PDFs or clean scanned copies. Photos taken on site (e.g. phone camera shots of printed logs) are not supported and may produce unreliable results.
+
+## Current Scope and Limitations
+
+- **Standard alignment:** Built and validated against **Australian Standard AS 1726** borehole log formats. Logs following other national standards may work but are not yet validated.
+- **Document types:** Borehole logs (BH), pavement core logs (PCP), and test pit logs (TP). Other geotechnical documents (e.g. CPT plots, lab reports) are not currently supported.
+- **Languages:** English only. Other languages may partially work but are not officially supported.
+- **Units:** Metric only — depths and dimensions must be in metres. Logs in feet or other imperial units are not currently supported.
+- **Scan quality:** Logs should be scanned orthogonally. Tilted scans work within approximately 10°, but accuracy drops beyond that.
+- **Watermarks:** PDFs with heavy watermarks, especially tilted ones, will reduce accuracy — particularly for strength and test data extraction. Upload a clean copy where possible.
+- **Handwriting:** Clear handwriting is supported. Extremely unclear handwriting may affect results.
+- **File size:** Maximum 20 MB per file.
 
 ## Credits
 
