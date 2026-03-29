@@ -15,12 +15,22 @@
 </p>
 
 <p align="center">
-  <a href="https://boreholeai.com">Website</a> · <a href="https://boreholeai.com/app/settings/api-keys">Get API Key</a> · <a href="mailto:support@boreholeai.com">Contact</a>
+  <a href="https://boreholeai.com">boreholeai.com</a> · <a href="https://boreholeai.com/app/settings/api-keys">Get API Key</a> · <a href="mailto:support@boreholeai.com">Contact</a>
 </p>
 
 ---
 
 Upload borehole log PDFs or images, get structured ground profiles, test data, and annotated PDFs.
+
+## Background
+
+**The problem:** Geotechnical engineers routinely extract data from borehole log PDFs by hand — reading material descriptions, depths, test results, and keying them into spreadsheets or AGS files. On a typical project with dozens of logs, this takes days. On larger projects, it can take weeks.
+
+**Why it matters:** This matters beyond individual project efficiency. Globally, millions of dollars are spent each year on new ground investigations to understand subsurface conditions — but much of this work has already been done before. Valuable geological and geotechnical records from past projects sit in libraries as old hard copies, in consultancy archives, or on digital platforms that aren't searchable or interoperable. Over time, these reports get misplaced, disposed of, or locked behind organisational boundaries. When that happens, the cycle of discovery starts again from scratch.
+
+**What others have done:** Countries like Denmark, the Netherlands, Switzerland, and the UK have recognised this problem and built centralised, publicly accessible geotechnical databases — some legislated as far back as 1926. In Australia, there is no equivalent national system. Geotechnical data is kept in isolation by individual consultancies, with no regulated or standardised approach to data collection and sharing after project completion. For more on this challenge and what other countries have achieved, see the [Churchill Trust report on geotechnical data capture](https://www.churchilltrust.com.au/project/to-develop-a-statewide-sustainable-gis-geotechnical-database-to-capture-present-data-for-the-future/).
+
+**Our approach:** We built BoreholeAI because we believe the first step toward better geotechnical data infrastructure is making it easier to get data out of the documents where it's currently trapped. BoreholeAI reads borehole log PDFs (scanned or digital) and extracts the geotechnical data — with depth and spatial awareness — into structured formats like Excel and AGS.
 
 ## What It Does
 
@@ -129,16 +139,6 @@ class FileResult:
     filename: str            # e.g. "Borehole_ground_profile.xlsx"
     path: Path               # Local path where file was saved
 ```
-
-## Background
-
-Geotechnical engineers routinely extract data from borehole log PDFs by hand — reading material descriptions, depths, test results, and keying them into spreadsheets or AGS files. On a typical project with dozens of logs, this takes days. On larger projects, it can take weeks.
-
-This matters beyond individual project efficiency. Globally, millions of dollars are spent each year on new ground investigations to understand subsurface conditions — but much of this work has already been done before. Valuable geological and geotechnical records from past projects sit in libraries as old hard copies, in consultancy archives, or on digital platforms that aren't searchable or interoperable. Over time, these reports get misplaced, disposed of, or locked behind organisational boundaries. When that happens, the cycle of discovery starts again from scratch.
-
-Countries like Denmark, the Netherlands, Switzerland, and the UK have recognised this problem and built centralised, publicly accessible geotechnical databases — some legislated as far back as 1926. In Australia, there is no equivalent national system. Geotechnical data is kept in isolation by individual consultancies, with no regulated or standardised approach to data collection and sharing after project completion. For more on this challenge and what other countries have achieved, see the [Churchill Trust report on geotechnical data capture](https://www.churchilltrust.com.au/project/to-develop-a-statewide-sustainable-gis-geotechnical-database-to-capture-present-data-for-the-future/).
-
-We built BoreholeAI because we believe the first step toward better geotechnical data infrastructure is making it easier to get data out of the documents where it's currently trapped. BoreholeAI reads borehole log PDFs (scanned or digital) and extracts the geotechnical data — with depth and spatial awareness — into structured formats like Excel and AGS.
 
 ## Accuracy
 
