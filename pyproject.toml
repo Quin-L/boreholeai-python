@@ -26,7 +26,7 @@ dependencies = [
 [project.urls]
 Homepage = "https://boreholeai.com"
 Documentation = "https://boreholeai.com/docs"
-Repository = "https://github.com/boreholeai/boreholeai-python"
+Repository = "https://github.com/Quin-L/boreholeai-python"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/boreholeai"]
