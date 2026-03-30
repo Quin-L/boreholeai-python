@@ -17,7 +17,10 @@ _POLL_MAX_INTERVAL = 10.0      # seconds
 _POLL_BACKOFF_FACTOR = 1.5
 
 # Default output directory
-_DEFAULT_OUTPUT_DIR = "./boreholeai_output"
+_DEFAULT_OUTPUT_DIR = "./results"
+
+# Braille spinner frames
+_SPINNER = "⠋⠙⠹⠸⠼⠴⠦⠧⠇⠏"
 
 
 class BoreholeAI:
@@ -84,19 +87,21 @@ class BoreholeAI:
         out = Path(output_dir).resolve()
         out.mkdir(parents=True, exist_ok=True)
 
-        # Upload
-        total_files = len(files)
-        _print_status(f"Uploading {total_files} file(s)...")
+        filenames = ", ".join(f.name for f in files)
+        _log(f"Starting {filenames}")
+
         job_data = self._api.create_job(files)
         job_id = job_data["job_id"]
         num_pages = job_data["num_pages"]
-        _print_status(
-            f"Job {job_id[:8]}... created — "
-            f"{num_pages} page(s), {total_files} file(s)"
-        )
+        short_id = job_id[:8]
+        _log(f"Job {short_id} created — {num_pages} page(s)")
 
         # Poll
-        result = self._poll_until_done(job_id)
+        start = time.monotonic()
+        result = self._poll_until_done(job_id, num_pages, start)
+        elapsed = time.monotonic() - start
+
+        _log(f"Completed {num_pages} page(s) in {_fmt_time(elapsed)}")
 
         # Download results
         downloaded = self._download_results(job_id, out)
@@ -109,29 +114,35 @@ class BoreholeAI:
             files=downloaded,
         )
 
-    def _poll_until_done(self, job_id: str) -> dict:
+    def _poll_until_done(self, job_id: str, num_pages: int, start: float) -> dict:
         """Poll GET /v1/jobs/{id} until status is completed or failed."""
         interval = _POLL_INITIAL_INTERVAL
+        spin_idx = 0
 
         while True:
             data = self._api.get_job(job_id)
             status = data["status"]
 
             if status == "completed":
-                _print_status("Processing complete!")
+                # Clear the spinner line
+                _clear_line()
                 return data
 
             if status == "failed":
+                _clear_line()
                 error = data.get("error_message", "Unknown error")
                 raise JobFailedError(f"Job {job_id} failed: {error}")
 
-            # Show progress if available
             progress = data.get("progress") or {}
             pages_done = progress.get("pages_done", 0)
-            pages_total = progress.get("pages_total", "?")
-            _print_status(
-                f"Processing... {pages_done}/{pages_total} pages "
-                f"[{status}]"
+            pages_total = progress.get("pages_total", num_pages)
+            elapsed = time.monotonic() - start
+            spinner = _SPINNER[spin_idx % len(_SPINNER)]
+            spin_idx += 1
+
+            _spinner_line(
+                f"{spinner} Processing {pages_done}/{pages_total} pages "
+                f"[{_fmt_time(elapsed)}]"
             )
 
             time.sleep(interval)
@@ -146,19 +157,44 @@ class BoreholeAI:
             filename = file_info["filename"]
             url = file_info["url"]
 
-            _print_status(f"Downloading {filename}...")
             content = self._api.download_file(url)
-
             dest = output_dir / filename
             dest.write_bytes(content)
             downloaded.append(FileResult(filename=filename, path=dest))
 
-        _print_status(
-            f"Downloaded {len(downloaded)} file(s) to {output_dir}"
-        )
+        _log(f"Saved {len(downloaded)} file(s) to {output_dir}")
+        for f in downloaded:
+            _log(f"  {f.filename}")
         return downloaded
 
 
-def _print_status(message: str) -> None:
-    """Print a status message to stderr (doesn't interfere with stdout piping)."""
+
+
+# -------------------------------------------
+# Internal Helper Functions
+# -------------------------------------------
+
+def _log(message: str) -> None:
+    """Print a status line to stderr."""
     print(f"  {message}", file=sys.stderr, flush=True)
+
+
+def _spinner_line(message: str) -> None:
+    """Overwrite the current line in-place (for spinner updates)."""
+    sys.stderr.write(f"\r  {message}\033[K")
+    sys.stderr.flush()
+
+
+def _clear_line() -> None:
+    """Clear the spinner line so the next _log prints cleanly."""
+    sys.stderr.write("\r\033[K")
+    sys.stderr.flush()
+
+
+def _fmt_time(seconds: float) -> str:
+    """Format elapsed seconds as a human-readable string."""
+    s = int(seconds)
+    if s < 60:
+        return f"{s}s"
+    m, s = divmod(s, 60)
+    return f"{m}m {s}s"
